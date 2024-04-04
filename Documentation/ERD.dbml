@@ -1,0 +1,36 @@
+Table users {
+  user_id INT [primary key, increment]
+  username NVARCHAR(50) [unique, not null]
+  created_date DATETIME [not null]
+}
+
+Table instructions {
+  instruction_id INT [primary key, increment]
+  user_id INT [ref: > users.user_id, not null]
+  language_id INT [ref: > languages.language_id, not null]
+  function_type_id INT [ref: > function_types.function_type_id, not null]
+  function_description NVARCHAR(250) [not null]
+  return_type_id INT [ref: > return_types.return_type_id]
+  created_date DATETIME [not null]
+}
+
+Table languages {
+  language_id INT [primary key, increment]
+  language NVARCHAR(50) [not null]
+}
+
+Table return_types {
+  return_type_id INT [primary key, increment]
+  return_type NVARCHAR(50) [not null]
+}
+
+Table function_types {
+  function_type_id INT [primary key, increment]
+  function_type NVARCHAR(50) [not null]
+}
+
+Table generated_code {
+  generated_code_id INT [primary key, increment]
+  instruction_id INT [ref: > instructions.instruction_id, not null]
+  actual_code NVARCHAR(MAX) [not null]
+}
